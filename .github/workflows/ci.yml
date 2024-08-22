@@ -135,19 +135,21 @@ jobs:
         run: make -j 10 all
 
       - name: Update Release Description
-        if : ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' }}
         run: |
           RELEASE_TAG=${{ github.ref_name }}
           RELEASE_BODY=$(gh release view "$RELEASE_TAG" --json body -q .body)
-          UPDATED_BODY=$(cat <<EOF ${RELEASE_BODY} \
-          --- \ 
-          \
-          Pull this version: \`docker pull reg.wehmoen.dev/github/ronin-ecosystem-validation:${RELEASE_TAG}\` \
+          UPDATED_BODY=$(cat <<EOF
+          $RELEASE_BODY
+
+          ---
+
+          Pull this version: \`docker pull reg.wehmoen.dev/github/ronin-ecosystem-validation:${RELEASE_TAG}\`
           EOF
           )
-          
-          echo $UPDATED_BODY > ./release.md
-  
+
+          echo "$UPDATED_BODY" > ./release.md
+
           gh release edit "$RELEASE_TAG" --notes-file ./release.md
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
