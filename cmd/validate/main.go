@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/wehmoen-dev/ecosystem-projects-validation/internal/pkg/data"
 	"os"
 )
@@ -30,7 +31,7 @@ func main() {
 		}
 		os.Exit(1)
 	} else {
-		println("valid")
+		fmt.Print("valid")
 	}
 
 }
