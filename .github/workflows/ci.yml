@@ -143,7 +143,8 @@ jobs:
           --- \ 
           \
           Pull this version: \`docker pull reg.wehmoen.dev/github/ronin-ecosystem-validation:${RELEASE_TAG}\` \
-          EOF)
+          EOF
+          )
           
           echo $UPDATED_BODY > ./release.md
   
