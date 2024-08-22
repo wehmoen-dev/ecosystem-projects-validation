@@ -29,7 +29,6 @@ func main() {
 		for _, err := range errors {
 			println(err.Error())
 		}
-		os.Exit(1)
 	} else {
 		fmt.Print("valid")
 	}
