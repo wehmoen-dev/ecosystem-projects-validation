@@ -139,9 +139,8 @@ jobs:
         run: |
           RELEASE_TAG=${{ github.ref_name }}
           RELEASE_BODY=$(gh release view "$RELEASE_TAG" --json body -q .body)
-          UPDATED_BODY="${RELEASE_BODY}\n\nPull this version: `docker pull reg.wehmoen.dev/github/ronin-ecosystem-validation:${RELEASE_TAG}`"
-          echo -e "$UPDATED_BODY" > updated_description.txt
-          gh release edit "$RELEASE_TAG" --notes-file updated_description.txt
+          UPDATED_BODY="${RELEASE_BODY}\n\n---\n\nPull this version: `docker pull reg.wehmoen.dev/github/ronin-ecosystem-validation:${RELEASE_TAG}`"
+          echo -e "$UPDATED_BODY" | gh release edit "$RELEASE_TAG" --notes-file -
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
