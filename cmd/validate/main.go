@@ -27,7 +27,7 @@ func main() {
 
 	if len(errors) > 0 {
 		for _, err := range errors {
-			println(err.Error())
+			fmt.Println(err.Error())
 		}
 	} else {
 		fmt.Print("valid")
