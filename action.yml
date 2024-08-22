@@ -1,0 +1,31 @@
+name: 'Validator Installation'
+description: 'Installs the validator for the Ronin Ecosystem Repository'
+author: 'wehmoen'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+inputs:
+  version:
+    description: 'The version of the validator to install'
+    required: true
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Validator
+      run: |
+        echo "Installing Ronin Ecosystem Validator"
+        if [ "${{ inputs.version }}" = "latest" ]; then
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/wehmoen-dev/ecosystem-projects-validation/releases/latest)        
+          DOWNLOAD_URL="https://github.com/wehmoen-dev/ecosystem-projects-validation/releases/download/$(echo $LATEST_RELEASE | jq -r '.tag_name')/ecosystem-projects-validation-linux-amd64.tar.gz"
+        else
+          DOWNLOAD_URL="https://github.com/wehmoen-dev/ecosystem-projects-validation/releases/download/${{ inputs.version }}/ecosystem-projects-validation-linux-amd64.tar.gz"
+        fi
+        curl -sL -o /tmp/ecosystem-projects-validation.tar.gz $DOWNLOAD_URL
+        tar -xzf /tmp/ecosystem-projects-validation.tar.gz -C /bin
+        mv /bin/validate-linux-amd64 /bin/validate
+        chmod +x /bin/validate
+
+      shell: bash
