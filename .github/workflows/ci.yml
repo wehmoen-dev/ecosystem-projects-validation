@@ -132,7 +132,7 @@ jobs:
 
       - name: Build Release Assets
         if : ${{ github.event_name == 'release' }}
-        run: make all
+        run: make -j 10 all
 
       - name: Update Release Description
         if : ${{ github.event_name == 'release' }}
